@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Entity.h"
 
+
 Window::Window(const char* wTitle, int wHeight, int wWidth)
   : WINDOW_HEIGHT(wHeight), WINDOW_WIDTH(wWidth), WINDOW_TITLE(wTitle)
 {
@@ -19,7 +20,7 @@ Window::Window(const char* wTitle, int wHeight, int wWidth)
   }
 
   // Initialize hardware gpu rendering
-  renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
+  renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == NULL) {
     std::cout << "smh... There was an error when creating a renderer...\n" << SDL_GetError() << "\n";
   }
@@ -59,7 +60,7 @@ SDL_Texture* Window::loadTexture(const char* path) {
 }
 
 // Render an entity to the screen, with two SDL_Rects.
-void Window::render(Entity& ent) {
+void Window::renderEntity(Entity& ent) {
   SDL_Rect src;
   src.x = ent.getHitbox().x;
   src.y = ent.getHitbox().y;
@@ -73,6 +74,10 @@ void Window::render(Entity& ent) {
   dst.h = ent.getHitbox().h * 2;
 
   SDL_RenderCopy(renderer, ent.getTexture(), &src, &dst);
+}
+
+void Window::renderPlayer() {
+
 }
 
 // Just literally render a texture to the screen. Don't do this, this is just a little debug function.

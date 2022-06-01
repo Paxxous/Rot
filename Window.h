@@ -15,7 +15,8 @@ public:
   SDL_Texture* loadTexture(const char* path); // Initializing your textures and images. This'll be loaded into the entity class, or just shown to the screen (NOTE: not recommended)
 
   void showTexture(SDL_Texture* texture); // mostly for debug purposes
-  void render(Entity& p_entity);
+  void renderEntity(Entity& p_entity);
+  void renderPlayer();
 
 private:
   // Width and height of the window once it's rendered

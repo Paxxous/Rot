@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Game.h"
 #include "Entity.h"
+#include "Screens.h"
+#include "Def.h"
 
 
 /*
@@ -17,22 +19,23 @@
  Now it's time to blit some images :DDD
 
  5/27/2022: We've made a git repo :DDD Hello github <3
+ 6/1/2022 Guess what time it is ;) I've done some major changes ig... It's much more difficult coding in sdl2 than I've originally expected.
 */
 
 void game() {
 
   // Create the window
-  Window mainWindow("Rot", 750, 750);
+  Window mainWindow("Rot", 640, 640);
 
-
+  
 
   // Begin the main game loop:
   bool running = true;
 
   // Initialize you.
-  SDL_Texture* youTexture = mainWindow.loadTexture("res/gfx/you.png");
+  SDL_Texture* youTexture = mainWindow.loadTexture(PLAYERTEXTURE);
   Entity you(youTexture, 0, 0);
-   
+
   SDL_Event e;
   while (running) {
     while (SDL_PollEvent(&e) > 0) {
@@ -47,11 +50,9 @@ void game() {
     mainWindow.clear();
     mainWindow.windowColor(255, 255, 255, 255);
 
-    // Fall down
-    //you.fall();
-
     // Show you
-    mainWindow.render(you);
+    mainWindow.renderEntity(you);
+
 
     // Display everything that has occured to the screen
     mainWindow.show();

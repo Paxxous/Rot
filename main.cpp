@@ -6,7 +6,6 @@
 #include <SDL_mixer.h>
 
 // My own game libraries
-#include "Window.h"
 #include "Game.h"
 
 // Just gonna be a simple warmup (also ctrl + j focuses the editor)
