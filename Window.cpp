@@ -6,7 +6,7 @@
 #include <SDL_mixer.h>
 
 #include "Window.h"
-#include "Game.h"
+#include "Entity.h"
 
 Window::Window(const char* wTitle, int wHeight, int wWidth)
   : WINDOW_HEIGHT(wHeight), WINDOW_WIDTH(wWidth), WINDOW_TITLE(wTitle)
@@ -15,13 +15,13 @@ Window::Window(const char* wTitle, int wHeight, int wWidth)
 
   // Initialize most of the stuff in SDL.h
   if (SDL_Init(SDL_INIT_EVERYTHING) > 0) {
-    std::cout << "lmao there was an issue initializing sdl,\n" << SDL_GetError() << std::endl;
+    std::cout << "lmao there was an issue initializing sdl,\n" << SDL_GetError() << "\n";
   }
 
   // Initialize hardware gpu rendering
   renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
   if (renderer == NULL) {
-    std::cout << "smh... There was an error when creating a renderer...\n" << SDL_GetError() << std::endl;
+    std::cout << "smh... There was an error when creating a renderer...\n" << SDL_GetError() << "\n";
   }
 }
 
@@ -50,12 +50,32 @@ void Window::show() {
 SDL_Texture* Window::loadTexture(const char* path) {
   SDL_Texture* loadedIMG = IMG_LoadTexture(renderer, path);
   if (loadedIMG == NULL) {
-    std::cout << "Damn bro, there seems to be a problem rendering something there\n" << SDL_GetError() << std::endl;
+    std::cout << "Damn bro, there seems to be a problem rendering something there\n" << SDL_GetError() << "\n";
+
+    loadedIMG = IMG_LoadTexture(renderer, "res/gfx/Debug/Missing-Texture.png");
   }
 
   return loadedIMG;
 }
 
+// Render an entity to the screen, with two SDL_Rects.
+void Window::render(Entity& ent) {
+  SDL_Rect src;
+  src.x = ent.getHitbox().x;
+  src.y = ent.getHitbox().y;
+  src.w = ent.getHitbox().w;
+  src.h = ent.getHitbox().h;
+
+  SDL_Rect dst;
+  dst.x = ent.getX() * 2;
+  dst.y = ent.getY() * 2;
+  dst.w = ent.getHitbox().w * 2;
+  dst.h = ent.getHitbox().h * 2;
+
+  SDL_RenderCopy(renderer, ent.getTexture(), &src, &dst);
+}
+
+// Just literally render a texture to the screen. Don't do this, this is just a little debug function.
 void Window::showTexture(SDL_Texture* texture) {
   SDL_RenderCopy(renderer, texture, NULL, NULL);
 }

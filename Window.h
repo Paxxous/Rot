@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Entity.h"
+
 
 class Window {
 public:
@@ -10,8 +12,10 @@ public:
   void clean();
   void show();
 
-  SDL_Texture* loadTexture(const char* path);
+  SDL_Texture* loadTexture(const char* path); // Initializing your textures and images. This'll be loaded into the entity class, or just shown to the screen (NOTE: not recommended)
+
   void showTexture(SDL_Texture* texture); // mostly for debug purposes
+  void render(Entity& p_entity);
 
 private:
   // Width and height of the window once it's rendered
@@ -19,6 +23,6 @@ private:
   int WINDOW_WIDTH;
   const char* WINDOW_TITLE;
 
-  SDL_Window* mainWindow = nullptr;
-  SDL_Renderer* renderer = nullptr;
+  SDL_Window* mainWindow;
+  SDL_Renderer* renderer;
 };

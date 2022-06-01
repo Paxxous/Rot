@@ -5,6 +5,7 @@
 
 #include "Window.h"
 #include "Game.h"
+#include "Entity.h"
 
 
 /*
@@ -20,18 +21,23 @@
 
 void game() {
 
-  Window mainWindow("Rot", 640, 960);
+  // Create the window
+  Window mainWindow("Rot", 750, 750);
+
 
 
   // Begin the main game loop:
   bool running = true;
 
-  // Initialize all of the textures
-  SDL_Texture* you = mainWindow.loadTexture("res/Sprites/you.png");
-
+  // Initialize you.
+  SDL_Texture* youTexture = mainWindow.loadTexture("res/gfx/you.png");
+  Entity you(youTexture, 0, 0);
+   
   SDL_Event e;
   while (running) {
     while (SDL_PollEvent(&e) > 0) {
+
+      // Handle exit input.
       if (e.type == SDL_QUIT) {
         running = false;
       }
@@ -41,10 +47,13 @@ void game() {
     mainWindow.clear();
     mainWindow.windowColor(255, 255, 255, 255);
 
-    // Load you to the screen    
-    mainWindow.showTexture(you);
+    // Fall down
+    //you.fall();
 
-    // Display
+    // Show you
+    mainWindow.render(you);
+
+    // Display everything that has occured to the screen
     mainWindow.show();
   }
 
