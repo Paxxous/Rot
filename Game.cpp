@@ -27,14 +27,17 @@ void game() {
   // Create the window
   Window mainWindow("Rot", 640, 640);
 
-  
+  mainWindow.windowColor(255, 255, 255, 255);
+
+  // Initialize you
+  SDL_Texture* youTexture = mainWindow.loadTexture(PLAYERTEXTURE);
+  Player you(youTexture, 0, 0);
+
+  SDL_Texture* enemyTexture = mainWindow.loadTexture(ENEMY);
+  Entity enemy(enemyTexture, 0, 64);
 
   // Begin the main game loop:
   bool running = true;
-
-  // Initialize you.
-  SDL_Texture* youTexture = mainWindow.loadTexture(PLAYERTEXTURE);
-  Entity you(youTexture, 0, 0);
 
   SDL_Event e;
   while (running) {
@@ -51,7 +54,10 @@ void game() {
     mainWindow.windowColor(255, 255, 255, 255);
 
     // Show you
-    mainWindow.renderEntity(you);
+    mainWindow.render(you);
+
+    mainWindow.render(enemy);
+    enemy.animate(5, 0, 200);
 
 
     // Display everything that has occured to the screen

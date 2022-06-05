@@ -1,22 +1,37 @@
 #pragma once
 
+#include <vector>
+
 // The entity class
 class Entity {
 public:
-  Entity(SDL_Texture* texture, int x, int y);
+  Entity(SDL_Texture* texture, int x, int y, int currentFrame = 1, int w = 64, int h = 64);
 
-  int getX();
-  int getY();
+  // Get both of the x and y axis' without having to publicize entityX and Y
+  inline int getX() {
+    return entityX;
+  }
+
+  inline int getY() {
+    return entityY;
+  }
+
+  // Reset the x and y axis. I don't know why I did this if I'm being honest
   void reset();
+  void animate(int frames, int strip, int speed, int w = 64, int h = 64);
+
 
   SDL_Texture* getTexture();
   SDL_Rect getHitbox();
 
 private:
-  int entityX, entityY;
+  int entityX, entityY, entityH, entityW;
 
   SDL_Texture* entityTexture;
   SDL_Rect hitBox;
+
+  // An animation thing
+  int currentFrame = 1;
 };
 
 
@@ -26,6 +41,15 @@ public:
   Player(SDL_Texture* tex, int x, int y);
 
   SDL_Texture* getTexture();
+  SDL_Rect getHitbox();
+
+  inline int getX() {
+    return playerX;
+  }
+
+  inline int getY() {
+    return playerY;
+  };
 
 private:
   // mostly used for getting the current width and height of the player, as well as animating
@@ -36,7 +60,4 @@ private:
 
   // The x and y of the player, lets movement happen.
   int playerX, playerY;
-
-  // This takes input from the keyboard and such
-  SDL_Event event;
-};
+};  

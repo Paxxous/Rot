@@ -60,7 +60,7 @@ SDL_Texture* Window::loadTexture(const char* path) {
 }
 
 // Render an entity to the screen, with two SDL_Rects.
-void Window::renderEntity(Entity& ent) {
+void Window::render(Entity& ent) {
   SDL_Rect src;
   src.x = ent.getHitbox().x;
   src.y = ent.getHitbox().y;
@@ -76,8 +76,21 @@ void Window::renderEntity(Entity& ent) {
   SDL_RenderCopy(renderer, ent.getTexture(), &src, &dst);
 }
 
-void Window::renderPlayer() {
+// Using function overloading because this seems to be the best method :DD
+void Window::render(Player& player) {
+  SDL_Rect src;
+  src.x = player.getHitbox().x;
+  src.y = player.getHitbox().y;
+  src.w = player.getHitbox().w;
+  src.h = player.getHitbox().h;
 
+  SDL_Rect dst;
+  dst.x = player.getX() * 2;
+  dst.y = player.getY() * 2;
+  dst.w = player.getHitbox().w * 2;
+  dst.h = player.getHitbox().h * 2;
+
+  SDL_RenderCopy(renderer, player.getTexture(), &src, &dst);
 }
 
 // Just literally render a texture to the screen. Don't do this, this is just a little debug function.
