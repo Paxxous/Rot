@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "Math.h"
 
 // The entity class
 class Entity {
@@ -38,7 +38,7 @@ private:
 // Should I make a special player class? Idk man. I was thinking of just making him an entity, but I don't want to code all of the player movement and such inside of the entity class
 class Player {
 public:
-  Player(SDL_Texture* tex, int x, int y);
+  Player(SDL_Texture* tex, int x, int y, int fVelocity = 1, int mVelocity = 100);
 
   SDL_Texture* getTexture();
   SDL_Rect getHitbox();
@@ -51,6 +51,9 @@ public:
     return playerY;
   };
 
+  void animate(int frames, int strip, int speed, int w = 64, int h = 64);
+  void doFall();
+
 private:
   // mostly used for getting the current width and height of the player, as well as animating
   SDL_Rect hitBox;
@@ -60,4 +63,9 @@ private:
 
   // The x and y of the player, lets movement happen.
   int playerX, playerY;
+
+  // The current frame of the animation, might add it to the player class initializer
+  int currentFrame = 1;
+
+  Physics physics;
 };  

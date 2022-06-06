@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Entity.h"
+#include "Math.h"
 
 /* This is for entities, a universal class. Not the player class, which has its own special parts. */
 
@@ -56,13 +57,26 @@ void Entity::animate(int frames, int strip, int speed, int w, int h) {
 
 /* The player class, a special type of entity that is controlled by you, and interacts with the world around it. */
 
-Player::Player(SDL_Texture* tex, int x, int y)
-  : texture(tex), playerX(x), playerY(y)
+Player::Player(SDL_Texture* tex, int x, int y, int fVelocity, int mVelocity)
+  : texture(tex), playerX(x), playerY(y), physics(fVelocity, mVelocity)
 {
   hitBox.x = 0;
   hitBox.y = 0;
   hitBox.w = 64;
   hitBox.h = 64;
+}
+
+void Player::animate(int frames, int strip, int speed, int w, int h) {
+  currentFrame += 1;
+
+  hitBox.x = (SDL_GetTicks() / speed) % frames * 64;
+  hitBox.y = strip * 64;
+
+
+  if (currentFrame > frames) {
+    currentFrame = 1;
+  }
+
 }
 
 // Get the player texture
@@ -72,4 +86,9 @@ SDL_Texture* Player::getTexture() {
 
 SDL_Rect Player::getHitbox() {
   return hitBox;
+}
+
+// I don't knwo how to do physics :((((( {But I do think I know how to create falling, so let's do that.}
+void Player::doFall() {
+  physics.fall(playerX, playerY);
 }

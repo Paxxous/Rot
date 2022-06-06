@@ -25,7 +25,7 @@
 void game() {
 
   // Create the window
-  Window mainWindow("Rot", 640, 640);
+  Window mainWindow("Rot", SCREENHEIGHT, SCREENWIDTH);
 
   mainWindow.windowColor(255, 255, 255, 255);
 
@@ -54,6 +54,8 @@ void game() {
     mainWindow.windowColor(255, 255, 255, 255);
 
     // Show you
+    you.animate(4, 0, 400);
+    you.doFall();
     mainWindow.render(you);
 
     mainWindow.render(enemy);
