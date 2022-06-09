@@ -13,10 +13,15 @@ Physics::Physics(int fallVelocity, int maxVelocity)
 
 // This function is what will make the player fall. Let's hope I didn't search anything up for this one oh god
 void Physics::fall(int &x, int &y, int w, int h) {
-  if (SCREENHEIGHT / 2 >= y + w) {
-    y += 2;
-    std::cout << y << "\n";
+  if (currentTick - lastTick <= 0) {
+    currentTick = SDL_GetTicks() + 100;
+    if (SCREENHEIGHT / 2 >= y + w) {
+      y += 2;
+      //std::cout << y << ", " << lastTick << ", " << currentTick << "\n";
+    }
   }
+
+  lastTick = SDL_GetTicks();
 }
 
 // this probably won't be finsihed. lmao

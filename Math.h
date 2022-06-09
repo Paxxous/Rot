@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL_timer.h>
 
 // I'm just doing falling rn
 class Physics {
@@ -10,4 +11,6 @@ public:
 private:
   // fVel, the amount added as you fall. Mvel, the max cap of velocity that stops you. So you don't go super speed and break the game lol.
   int fVel, mVel;
+  int currentTick = SDL_GetTicks();
+  int lastTick = SDL_GetTicks();
 };

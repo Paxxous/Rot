@@ -68,4 +68,4 @@ private:
   int currentFrame = 1;
 
   Physics physics;
-};  
+};
