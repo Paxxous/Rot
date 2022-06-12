@@ -52,11 +52,13 @@ public:
   };
 
   void animate(int frames, int strip, int speed, int w = 64, int h = 64);
+  void handleInput();
   void doFall();
 
 private:
   // mostly used for getting the current width and height of the player, as well as animating
   SDL_Rect hitBox;
+  Physics physics;
 
   // Just the texture of the player
   SDL_Texture* texture;
@@ -67,5 +69,9 @@ private:
   // The current frame of the animation, might add it to the player class initializer
   int currentFrame = 1;
 
-  Physics physics;
+  const Uint8* keyStates = SDL_GetKeyboardState(NULL);
+
+  // For stuff like delta time
+  int currentTick = SDL_GetTicks();
+  int lastTick = SDL_GetTicks();
 };

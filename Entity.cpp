@@ -92,3 +92,22 @@ SDL_Rect Player::getHitbox() {
 void Player::doFall() {
   physics.fall(playerX, playerY);
 }
+
+// Handle the input from the keyboard
+void Player::handleInput() {
+  currentTick = SDL_GetTicks();
+
+  // Right
+  if (keyStates[SDL_SCANCODE_D] && currentTick >= lastTick) {
+    playerX += 1;
+    std::cout << "Right\n";
+    lastTick = SDL_GetTicks();
+  }
+
+  // Left
+  else if (keyStates[SDL_SCANCODE_A] && currentTick >= lastTick) {
+    playerX -= 1;
+    std::cout << "Left\n";
+    lastTick = SDL_GetTicks();
+  }
+}

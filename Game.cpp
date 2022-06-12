@@ -56,6 +56,7 @@ void game() {
     // Show you
     you.animate(4, 0, 400);
     you.doFall();
+    you.handleInput();
     mainWindow.render(you);
 
     mainWindow.render(enemy);
